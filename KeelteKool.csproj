@@ -178,6 +178,10 @@
     <Compile Include="Migrations\202601271044087_InitialCreate.Designer.cs">
       <DependentUpon>202601271044087_InitialCreate.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202603041323223_UpdateRegistrationUserRelation.cs" />
+    <Compile Include="Migrations\202603041323223_UpdateRegistrationUserRelation.Designer.cs">
+      <DependentUpon>202603041323223_UpdateRegistrationUserRelation.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Course.cs" />
@@ -295,6 +299,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202601271044087_InitialCreate.resx">
       <DependentUpon>202601271044087_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202603041323223_UpdateRegistrationUserRelation.resx">
+      <DependentUpon>202603041323223_UpdateRegistrationUserRelation.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -22,9 +22,9 @@ namespace KeelteKool.Controllers
         public ActionResult Details(int id)
         {
             var training = db.Trainings
-                             .Include(t => t.Course)
-                             .Include(t => t.Registrations)
-                             .FirstOrDefault(t => t.Id == id);
+                            .Include(t => t.Course)  // информация о курсе
+                            .Include(t => t.Registrations.Select(r => r.ApplicationUser)) // информация об учениках
+                            .FirstOrDefault(t => t.Id == id);
 
             if (training == null) return HttpNotFound();
 

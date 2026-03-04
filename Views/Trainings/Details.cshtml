@@ -28,7 +28,7 @@
             <div class="card-header">
                 <h4>Registreerunud õpilased</h4>
             </div>
-            <div class="card-body">
+            <<div class="card-body">
                 @if (!Model.Registrations.Any())
                 {
                     <p>Sellele kursusele pole veel keegi registreerunud.</p>
@@ -38,16 +38,18 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Kasutaja ID</th>
-                                <th>Staatus</th>
+                                <th>Õpilase nimi</th>
+                                <th>Email</th>
+                                <th>Staatus</th> 
                             </tr>
                         </thead>
                         <tbody>
                             @foreach (var registration in Model.Registrations)
                             {
                                 <tr>
-                                    <td>@registration.ApplicationUserId</td>
-                                    <td>@registration.Staatus</td>
+                                    <td>@registration.ApplicationUser.UserName</td> 
+                                    <td>@registration.ApplicationUser.Email</td>    
+                                    <td>@registration.Staatus</td>                  
                                 </tr>
                             }
                         </tbody>
@@ -59,5 +61,5 @@
 </div>
 
 <div>
-    <a href="@Url.Action("Index", "Trainings")" class="btn btn-secondary">Tagasi kursuste nimekirja</a>
+    <a href="@Url.Action("Index", "Home")" class="btn btn-secondary">Tagasi kursuste nimekirja</a>
 </div>

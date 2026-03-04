@@ -14,6 +14,9 @@ namespace KeelteKool.Models
 
         public string ApplicationUserId { get; set; }
 
-        public string Staatus { get; set; } // Ootel / Kinnitatud / Tühistatud
+
+        public virtual ApplicationUser ApplicationUser { get; set; }
+
+        public string Staatus { get; set; } 
     }
 }
