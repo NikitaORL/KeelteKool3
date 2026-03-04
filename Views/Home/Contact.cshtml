@@ -1,0 +1,26 @@
+﻿@model IEnumerable<KeelteKool.Models.Teacher>
+
+@{
+    ViewBag.Title = "Meie õpetajad";
+}
+
+
+<main class="container mt-4">
+    <h1>Siin te saate vaadata meie õpetajad:</h1>
+    <div class="row">
+        @foreach (var teacher in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="@Url.Content("~/" + teacher.FotoPath)" class="card-img-top" alt="@teacher.Nimi" />
+                    <div class="card-body">
+                        <h5 class="card-title">@teacher.Nimi</h5>
+                        <p class="card-text">
+                            <strong>Kvalifikatsioon:</strong> @teacher.Kvalifikatsioon
+                        </p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</main>

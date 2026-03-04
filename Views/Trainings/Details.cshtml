@@ -1,0 +1,63 @@
+﻿@model KeelteKool.Models.Training
+@using Microsoft.AspNet.Identity
+
+@{
+    ViewBag.Title = "Kursuse detailsed andmed";
+}
+
+<h2>@Model.Course.Nimetus - @Model.Course.Keel (@Model.Course.Tase)</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Kursuse info</h4>
+            </div>
+            <div class="card-body">
+                <p><strong>Keel:</strong> @Model.Course.Keel</p>
+                <p><strong>Tase:</strong> @Model.Course.Tase</p>
+                <p><strong>Algus:</strong> @Model.AlgusKuupaev.ToShortDateString()</p>
+                <p><strong>Lõpp:</strong> @Model.LoppKuupaev.ToShortDateString()</p>
+                <p><strong>Osalejaid:</strong> @Model.Registrations.Count() / @Model.MaxOsalejaid</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h4>Registreerunud õpilased</h4>
+            </div>
+            <div class="card-body">
+                @if (!Model.Registrations.Any())
+                {
+                    <p>Sellele kursusele pole veel keegi registreerunud.</p>
+                }
+                else
+                {
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Kasutaja ID</th>
+                                <th>Staatus</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var registration in Model.Registrations)
+                            {
+                                <tr>
+                                    <td>@registration.ApplicationUserId</td>
+                                    <td>@registration.Staatus</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <a href="@Url.Action("Index", "Trainings")" class="btn btn-secondary">Tagasi kursuste nimekirja</a>
+</div>

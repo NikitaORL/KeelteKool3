@@ -1,0 +1,57 @@
+﻿@model IEnumerable<KeelteKool.Models.Training>
+@using Microsoft.AspNet.Identity
+
+@{
+    var userId = User.Identity.GetUserId();
+    bool isAdmin = User.IsInRole("Admin");
+    bool isTeacher = User.IsInRole("Opetaja");
+    bool isRegularUser = !isAdmin && !isTeacher;
+}
+
+@if (isRegularUser)
+{
+    <h1>Minu kursused</h1>
+
+    if (!Model.Any())
+    {
+        <p>Sa ei ole veel registreerunud ühelegi kursusele.</p>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var training in Model)
+            {
+                var course = training.Course;
+                var teacher = training.Teacher;
+
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">@course.Nimetus</h5>
+                            <p class="card-text">
+                                <strong>Keel:</strong> @course.Keel <br />
+                                <strong>Tase:</strong> @course.Tase <br />
+                                <strong>Õpetaja:</strong> @teacher.Nimi <br />
+                                <strong>Algus:</strong> @training.AlgusKuupaev.ToShortDateString() <br />
+                                <strong>Lõpp:</strong> @training.LoppKuupaev.ToShortDateString()
+                            </p>
+
+
+                            @if (training.Registrations.Any(r => r.ApplicationUserId == userId))
+                            {
+                                <a href="@Url.Action("Unregister", "Registrations", new { id = training.Id })" class="btn btn-warning mt-2">
+                                    Tühista tellimus
+                                </a>
+                            }
+
+                        </div> 
+                    </div> 
+                </div> 
+            }
+        </div> 
+    }
+}
+else
+{
+    <p>See leht on mõeldud ainult tavalistele kasutajatele, mitte adminidele ega õpetajatele.</p>
+}

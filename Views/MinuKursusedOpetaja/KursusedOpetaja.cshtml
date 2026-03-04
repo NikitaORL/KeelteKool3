@@ -1,0 +1,51 @@
+﻿@model IEnumerable<KeelteKool.Models.Training>
+@using Microsoft.AspNet.Identity
+
+@{
+    var userId = User.Identity.GetUserId();
+    bool isTeacher = User.IsInRole("Opetaja");
+}
+
+@if (isTeacher)
+{
+    <h1>Teie kursused</h1>
+
+    if (!Model.Any())
+    {
+        <p>Te ei vii hetkel läbi ühtegi kursust.</p>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var training in Model)
+            {
+                var course = training.Course;
+
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">@course.Nimetus</h5>
+
+                            <p class="card-text">
+                                <strong>Keel:</strong> @course.Keel <br />
+                                <strong>Tase:</strong> @course.Tase <br />
+                                <strong>Algus:</strong> @training.AlgusKuupaev.ToShortDateString() <br />
+                                <strong>Lõpp:</strong> @training.LoppKuupaev.ToShortDateString() <br />
+                                <strong>Osalejaid:</strong> @training.Registrations.Count() / @training.MaxOsalejaid
+                            </p>
+
+                            <a href="@Url.Action("Details", "Trainings", new { id = training.Id })" class="btn btn-primary">
+                                Vaata osalejaid
+                            </a>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+}
+else
+{
+    <p>See leht on mõeldud ainult õpetajatele.</p>
+}

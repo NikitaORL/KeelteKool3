@@ -1,0 +1,54 @@
+﻿@model IEnumerable<KeelteKool.Models.Training>
+@using Microsoft.AspNet.Identity
+
+<h1>Minu kursused</h1>
+
+@if (TempData["Message"] != null)
+{
+    <div class="alert alert-success">@TempData["Message"]</div>
+}
+
+@{
+    var userId = User.Identity.GetUserId();
+}
+
+<div class="row">
+    @foreach (var training in Model)
+    {
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title">@training.Course.Nimetus</h5>
+                    <p class="card-text">
+                        <strong>Keel:</strong> @training.Course.Keel <br />
+                        <strong>Tase:</strong> <span class="badge badge-info">@training.Course.Tase</span> <br />
+                        <strong>Õpetaja:</strong> @training.Teacher.Nimi <br />
+                        <strong>Algus:</strong> @training.AlgusKuupaev.ToShortDateString() <br />
+                        <strong>Lõpp:</strong> @training.LoppKuupaev.ToShortDateString() <br />
+                        <strong>Hind:</strong> @training.Hind € <br />
+                        <strong>Osalejaid:</strong> @training.Registrations.Count() / @training.MaxOsalejaid
+                    </p>
+
+                    @*  *@
+                    @if (!User.IsInRole("Admin") && !User.IsInRole("Opetaja"))
+                    {
+                        if (training.Registrations.Count() >= training.MaxOsalejaid)
+                        {
+                            <span class="text-danger">Grupp on täis!</span>
+                        }
+                        else if (training.Registrations.Any(r => r.ApplicationUserId == userId))
+                        {
+                        <span class="text-success">Sa oled juba registreeritud!</span>
+                        }
+                        else
+                        {
+                        <a href="@Url.Action("Register", "Registrations", new { id = training.Id })" class="btn btn-primary mt-2">
+                            Registreeru
+                        </a>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>
